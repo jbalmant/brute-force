@@ -2,6 +2,8 @@ import logging
 import subprocess
 import time
 from concurrent.futures import ProcessPoolExecutor
+from datetime import datetime
+
 # from concurrent.futures import ThreadPoolExecutor
 
 logging.basicConfig(filename='c:/brute-force.log', format='%(asctime)s %(message)s', level=logging.DEBUG)
@@ -29,7 +31,7 @@ def mount(passwd, volume="D:", path="C:/Program Files (x86)/Jetico/BestCrypt Vol
 def main():
     start_time = time.time()
 
-    print(f"CPU {CORES} - MAX {MAX}")
+    print(f"CPU {CORES} - MAX {MAX} - {datetime.utcnow()}")
 
     for i in values:
         mount(i)
