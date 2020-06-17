@@ -31,7 +31,7 @@ def main():
     with ProcessPoolExecutor(max_workers=CORES) as executor:
         results = executor.map(mount, values)
         for result in results:
-            if int(result) % (CORES * 4) == 0:
+            if int(result) % (CORES * 10) == 0:
                 logging.debug(result)
 
                 # print('Calm down')
