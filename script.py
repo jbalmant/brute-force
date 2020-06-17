@@ -8,8 +8,8 @@ from datetime import datetime
 
 logging.basicConfig(filename='c:/brute-force.log', format='%(asctime)s %(message)s', level=logging.DEBUG)
 
-CORES = 30
-MAX = 100
+CORES = 90
+MAX = 10000
 
 values = range(1, MAX, 1)
 
@@ -33,12 +33,12 @@ def main():
 
     print(f"CPU {CORES} - MAX {MAX} - {datetime.utcnow()}")
 
-    for i in values:
-        mount(i)
-
-    print("--- %s seconds ---" % (time.time() - start_time))
-
-    return
+    # for i in values:
+    #     mount(i)
+    #
+    # print("--- %s seconds ---" % (time.time() - start_time))
+    #
+    # return
 
     with ProcessPoolExecutor(max_workers=CORES) as executor:
         results = executor.map(mount, values)
