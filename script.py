@@ -7,8 +7,9 @@ from concurrent.futures import ProcessPoolExecutor
 logging.basicConfig(filename='c:/brute-force.log', format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 CORES = 30
+MAX = 100
 
-values = range(1, 100, 1)
+values = range(1, MAX, 1)
 
 wait = False
 
@@ -27,6 +28,8 @@ def mount(passwd, volume="D:", path="C:/Program Files (x86)/Jetico/BestCrypt Vol
 
 def main():
     start_time = time.time()
+
+    print(f"CPU {CORES} - MAX {MAX}")
 
     for i in values:
         mount(i)
