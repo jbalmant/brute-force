@@ -19,7 +19,7 @@ def mount(passwd, volume="D:", path="C:/Program Files (x86)/Jetico/BestCrypt Vol
         # while (wait):
         #     pass
         p = subprocess.Popen([path + "/bcfmgr.exe", "-Mount", volume, "-P" + password], shell=False)
-        p.communicate()
+        # p.communicate()
     except:
         logging.error(f'retry {password}')
     return password
@@ -27,6 +27,13 @@ def mount(passwd, volume="D:", path="C:/Program Files (x86)/Jetico/BestCrypt Vol
 
 def main():
     start_time = time.time()
+
+    for i in values:
+        mount(i)
+
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+    return
 
     with ProcessPoolExecutor(max_workers=CORES) as executor:
         results = executor.map(mount, values)
