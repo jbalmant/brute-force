@@ -8,8 +8,8 @@ from datetime import datetime
 
 logging.basicConfig(filename='c:/brute-force.log', format='%(asctime)s %(message)s', level=logging.DEBUG)
 
-CORES = 90
-MAX = 10000
+CORES = 1
+MAX = 100
 
 values = range(1, MAX, 1)
 
