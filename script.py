@@ -1,15 +1,15 @@
 import logging
 import subprocess
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
 from datetime import datetime
 
-logging.basicConfig(filename='c:/brute-force.log', format='%(asctime)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(filename='c:/bf-errors.log', format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 CORES = 127
 START = 1
-END = 100000000
+END = 100
 VOLUME = "E:"
 
 values = range(START, END, 1)
@@ -20,13 +20,18 @@ wait = False
 def mount(passwd, volume=VOLUME, path="C:/Program Files (x86)/Jetico/BestCrypt Volume Encryption"):
     password = '{:0>8d}'.format(passwd)
     try:
+        if passwd % 10 == 0:
+            message = f'{datetime.now()} - {password}'
+            print(message)
+            with open('c:/bf.log', 'a') as f:
+                f.write(message + '\n')
+
         p = subprocess.Popen([path + "/bcfmgr.exe", "-Mount", volume, "-P" + password],
                              shell=False,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         p.communicate()
 
-        #logging.error(f'err {stderr.decode("utf-8")} out {stdout.decode("utf-8")} rcode {p.returncode}')
     except:
         logging.error(f'exception retry {password}')
     return password
@@ -38,10 +43,7 @@ def main():
     print(f"VOLUME {VOLUME} CPU {CORES} - START {START} - END {END} - {datetime.utcnow()}")
 
     with ThreadPoolExecutor(max_workers=CORES) as executor:
-        results = executor.map(mount, values)
-        for result in results:
-            if int(result) % (1000) == 0:
-                logging.debug(result)
+        executor.map(mount, values)
 
     print("--- %s seconds ---" % (time.time() - start_time))
 
